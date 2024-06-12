@@ -2,15 +2,12 @@ plugins {
     java
     id("org.springframework.boot") version "3.3.0"
     id("io.spring.dependency-management") version "1.1.5"
-    id("org.asciidoctor.jvm.convert") version "3.3.2"
     id("com.epages.restdocs-api-spec") version "0.17.1"
-    id("org.hidetake.swagger.generator") version "2.18.2"
 }
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 val queryDslVersion = "5.0.0" // QueryDSL Version Setting
-val asciidoctorExt: Configuration by configurations.creating // Rest Docs
 
 java {
     toolchain {
@@ -22,7 +19,6 @@ configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
-    asciidoctorExt
 }
 
 repositories {
@@ -51,7 +47,6 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     // Rest Docs
-    asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc") // #1
     testImplementation("org.springframework.restdocs:spring-restdocs-asciidoctor")
     testImplementation("com.epages:restdocs-api-spec-mockmvc:0.17.1")
@@ -90,11 +85,26 @@ openapi3 {
     format = "yaml" // or json
 }
 
+val buildDir = layout.buildDirectory.get().asFile
 tasks.register<Copy>("copyOasToSwagger") {
-    val buildDir = layout.buildDirectory.get().asFile
 
+    dependsOn("openapi3")
     delete("src/main/resources/static/swagger-ui/openapi3.yaml") // 기존 OAS 파일 삭제
     from("$buildDir/api-spec/openapi3.yaml") // 복제할 OAS 파일 지정
     into("src/main/resources/static/swagger-ui/") // 타겟 디렉터리로 파일 복제
-    dependsOn("openapi3")
 }
+
+tasks {
+    bootJar {
+        from("build/api-spec") {
+            into ("BOOT-INF/classes/static/swagger-ui")
+        }
+    }
+
+    build {
+        // Ascii Doc 파일 생성이 성공해야만, Build 진행
+        dependsOn("copyOasToSwagger")
+    }
+}
+
+
