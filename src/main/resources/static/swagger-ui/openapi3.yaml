@@ -1,0 +1,41 @@
+openapi: 3.0.1
+info:
+  title: FastCamp E-Commerce
+  description: 주문 및 결제 파트
+  version: 1.0.0
+servers:
+- url: https://localhost:8080
+tags: []
+paths:
+  /:
+    get:
+      operationId: 나는짱1
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hi2486549215'
+              examples:
+                나는짱1:
+                  value: hi1
+  /hi2:
+    get:
+      tags:
+      - hi2
+      operationId: 나는짱2
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hi2486549215'
+              examples:
+                나는짱2:
+                  value: hi2
+components:
+  schemas:
+    hi2486549215:
+      type: object
