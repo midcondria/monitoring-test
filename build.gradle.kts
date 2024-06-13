@@ -77,14 +77,6 @@ tasks.named("clean") {
     }
 }
 
-openapi3 {
-    this.setServer("https://localhost:8080") // list로 넣을 수 있어 각종 환경의 URL들을 넣을 수 있음!
-    title = "FastCamp E-Commerce"
-    description = "주문 및 결제 파트"
-    version = "1.0.0"
-    format = "yaml" // or json
-}
-
 val buildDir = layout.buildDirectory.get().asFile
 tasks.register<Copy>("copyOasToSwagger") {
 
@@ -96,15 +88,17 @@ tasks.register<Copy>("copyOasToSwagger") {
 
 tasks {
     bootJar {
+        dependsOn("copyOasToSwagger")
         from("build/api-spec") {
             into ("BOOT-INF/classes/static/swagger-ui")
         }
     }
-
-    build {
-        // Ascii Doc 파일 생성이 성공해야만, Build 진행
-        dependsOn("copyOasToSwagger")
-    }
 }
 
-
+openapi3 {
+    this.setServer("https://midcon.store") // list로 넣을 수 있어 각종 환경의 URL을 넣을 수 있음!
+    title = "My API"
+    description = "My API description"
+    version = "0.1.0"
+    format = "yaml" // or json
+}

@@ -9,10 +9,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,34 +28,22 @@ class TestControllerTest {
     @DisplayName("")
     @Test
     void test() throws Exception {
-        // given
-
-        // when
-
-        // then
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/")
+        mockMvc.perform(get("/hi/hi1")
                 .accept(MediaType.APPLICATION_JSON)
             )
             .andDo(print())
             .andExpect(status().isOk())
             .andDo(document("나는짱1"));
-
     }
 
     @DisplayName("")
     @Test
     void test2() throws Exception {
-        // given
-
-        // when
-
-        // then
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/hi2")
+        mockMvc.perform(get("/hi/hi2")
                 .accept(MediaType.APPLICATION_JSON)
             )
             .andDo(print())
             .andExpect(status().isOk())
             .andDo(document("나는짱2"));
-
     }
 }
