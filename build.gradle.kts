@@ -29,6 +29,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // 모니터링
+    implementation ("io.micrometer:micrometer-registry-prometheus")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // QueryDSL
@@ -57,7 +60,7 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-    finalizedBy("copyOasToSwagger")
+//    finalizedBy("copyOasToSwagger")
 }
 
 val querydslDir = layout.buildDirectory.dir("generated/querydsl").get().asFile
@@ -87,6 +90,10 @@ tasks.register<Copy>("copyOasToSwagger") {
 }
 
 tasks {
+    jar {
+        enabled = false
+    }
+
     bootJar {
         dependsOn("copyOasToSwagger")
         from("build/api-spec") {
