@@ -31,8 +31,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     // 모니터링
-    implementation ("io.micrometer:micrometer-registry-prometheus")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation ("io.micrometer:micrometer-registry-prometheus")
 
     // QueryDSL
     implementation("com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta")
@@ -60,7 +60,7 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-//    finalizedBy("copyOasToSwagger")
+    finalizedBy("copyOasToSwagger")
 }
 
 val querydslDir = layout.buildDirectory.dir("generated/querydsl").get().asFile
@@ -103,7 +103,7 @@ tasks {
 }
 
 openapi3 {
-    this.setServer("https://midcon.store") // list로 넣을 수 있어 각종 환경의 URL을 넣을 수 있음!
+    this.setServer("http://localhost:8080") // list로 넣을 수 있어 각종 환경의 URL을 넣을 수 있음!
     title = "My API"
     description = "My API description"
     version = "0.1.0"
