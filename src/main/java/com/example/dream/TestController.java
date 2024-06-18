@@ -10,11 +10,14 @@ public class TestController {
 
     @GetMapping("/hi1")
     public String test() {
+        log.info("[hi1] hi1");
         return "hi1";
     }
 
     @GetMapping("/hi2")
     public String test2() {
+        log.info("[hi2] hi2");
+        log.error("[error] hi2 error");
         return "hi2";
     }
 
