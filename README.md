@@ -4,3 +4,4 @@
 - Spring Boot Actuator 연습
 - Prometheus 연습
 - Grafana 연습
+- 그라파나의 Alert rules 설정하여 장애 알림 설정
