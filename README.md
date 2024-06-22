@@ -5,3 +5,4 @@
 - Prometheus 연습
 - Grafana 연습
 - 그라파나의 Alert rules 설정하여 장애 알림 설정
+- EC2에 모니터링 서버 구축
